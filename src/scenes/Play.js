@@ -7,7 +7,7 @@ class Play extends Phaser.Scene {
         // load images / title sprite
         // preload.image('fileName', 'location')
         this.load.image('rocket', './assets/rocket.png');
-        this.load.image('spaceship', './assets/spaceship.png');
+        this.load.image('spaceship', './assets/explosion.png');
         this.load.image('starfield', './assets/starfield.png');
         // preload.music
         this.load.audio('background', './assets/background.wav');
@@ -34,23 +34,23 @@ class Play extends Phaser.Scene {
         //define our objects
         this.ball = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'rocket');
         //set the gravity
-        this.ball.setGravityY(100);
+        this.ball.setGravityY(200);
         //place the ground
         //let groundX = this.sys.game.config.width / 2;
         //let groundY = this.sys.game.config.height * .95;
-        let ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height * .95, 'spaceship');
+        this.ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height * .95, 'spaceship');
         //size the ground
-        ground.displayWidth = this.sys.game.config.width * 1.1;
+        this.ground.displayWidth = this.sys.game.config.width * 1.1;
         //make the ground stay in place
-        ground.setImmovable();
+        this.ground.setImmovable();
         //add the colliders
-        this.physics.add.collider(this.ball, ground);
+        this.physics.add.collider(this.ball, this.ground);
 
         this.input.on('pointerdown', this.jump, this);
     }
 
     jump() {
-        this.ball.setVelocityY(-100);
+        this.ball.setVelocityY(-120);
     }
 
     
