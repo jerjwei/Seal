@@ -55,13 +55,6 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.ball, this.ground);
 
         this.input.on('pointerdown', this.jump, this);
-          
-         // animation config
-         this.anims.create({
-            key: 'normal',
-            frames: this.anims.generateFrameNumbers('normal', { start: 0, end: 12, first: 0}),
-            frameRate: 20
-        });
     }
 
     jump() {
