@@ -7,7 +7,7 @@ class Spaceship extends Phaser.GameObjects.Sprite {
         this.points = pointValue;
     }
 
-    update() {
+    update(y) {
         // move spaceship left
         this.x -= game.settings.spaceshipSpeed;
         // wraparound screen bounds
@@ -16,7 +16,8 @@ class Spaceship extends Phaser.GameObjects.Sprite {
         }
     }
 
-    reset(){
+    reset(y){
         this.x = game.config.width;
+        this.y = y;
     }
 }

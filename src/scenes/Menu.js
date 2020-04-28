@@ -31,10 +31,10 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
         this.add.text(centerX, centerY-textSpacer, 'Endless Runner', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use (left) and (right) arrow to move & (F) to Fire', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'Use Left-Click to jump', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for Easy of (right arrow) for Hard', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for to start', menuConfig).setOrigin(0.5);
         
         // launch the next scene
         // this.scene.start('playScene');
@@ -46,26 +46,8 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-        // easy mode
-        game.settings = {
-            spaceshipSpeed: 3,
-            supershipSpeed: 5,
-            addTime: 4000,    // add 4 sec when hit
-            gameTimer: 60000,   
-        }
         this.sound.play('sfx_select');
         this.scene.start("playScene");    
-        }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            // hard mode
-            game.settings = {
-                spaceshipSpeed: 4,
-                supershipSpeed: 6,
-                addTime: 3000,   // add 3 sec when hit
-                gameTimer: 45000,  
-            }
-            this.sound.play('sfx_select');
-            this.scene.start("playScene");    
         }
     }   
 }
