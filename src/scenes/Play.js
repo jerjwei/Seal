@@ -8,7 +8,7 @@ class Play extends Phaser.Scene {
         // preload.image('fileName', 'location')
         this.load.image('ground', './assets/ground.png');
         this.load.image('background', './assets/background.png');
-        this.load.image('block', './assests/spaceship.png');
+        this.load.image('ice', './assets/ice.png');
         this.load.spritesheet('jump', './assets/jump.png', {frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 12});
         this.load.spritesheet('seal', './assets/normal.png', {frameWidth: 64, frameHeight: 48, startFrame: 1, endFrame: 2});
 
@@ -32,12 +32,10 @@ class Play extends Phaser.Scene {
         // game over flag
         //this.gameOver = false;
 
-         // add spaceship (x3)
-         this.ship01 = new Spaceship(this, game.config.width+142, Phaser.Math.Between(400, 100), 'spaceship', 0, 30).setOrigin(0, 0);
-         this.ship02 = new Spaceship(this, game.config.width+300, Phaser.Math.Between(400, 100), 'spaceship', 0, 20).setOrigin(0, 0);
-         this.ship03 = new Spaceship(this, game.config.width, Phaser.Math.Between(400, 100), 'spaceship', 0, 10).setOrigin(0, 0);
-
-
+        // add spaceship (x3)
+        this.ship01 = new Spaceship(this, game.config.width+142, Phaser.Math.Between(100, 400), 'ice', 0, 30).setOrigin(0, 0);
+        this.ship02 = new Spaceship(this, game.config.width+300, Phaser.Math.Between(100, 400), 'ice', 0, 20).setOrigin(0, 0);
+        this.ship03 = new Spaceship(this, game.config.width, Phaser.Math.Between(50, 500), 'ice', 0, 10).setOrigin(0, 0);
 
         //define our objects
         this.ball = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
@@ -53,7 +51,7 @@ class Play extends Phaser.Scene {
         this.ground.setImmovable();
         //add the colliders
         this.physics.add.collider(this.ball, this.ground);
-
+        
         this.input.on('pointerdown', this.jump, this);
     }
 
