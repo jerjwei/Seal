@@ -7,17 +7,17 @@ class Spaceship extends Phaser.GameObjects.Sprite {
         this.points = pointValue;
     }
 
-    update(y) {
+    update() {
         // move spaceship left
         this.x -= game.settings.spaceshipSpeed;
         // wraparound screen bounds
         if(this.x <= 0 - this.width){
             this.x = game.config.width;
+            this.y = Phaser.Math.Between(100, 400);
         }
     }
 
-    reset(y){
+    reset(number){
         this.x = game.config.width;
-        this.y = y;
     }
 }

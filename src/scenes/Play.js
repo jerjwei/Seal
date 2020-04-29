@@ -21,60 +21,65 @@ class Play extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
         // define keyboard keys
-        //keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-        //keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        //keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     
         // background music
-        //this.bgm = this.sound.add('background', {config});
-        //this.bgm.play();
+        // this.bgm = this.sound.add('background', {config});
+        // this.bgm.play();
     
         // game over flag
-        //this.gameOver = false;
+        // this.gameOver = false;
+
 
         // add spaceship (x3)
-        this.ship01 = new Spaceship(this, game.config.width+142, Phaser.Math.Between(100, 400), 'ice', 0, 30).setOrigin(0, 0);
-        this.ship02 = new Spaceship(this, game.config.width+300, Phaser.Math.Between(100, 400), 'ice', 0, 20).setOrigin(0, 0);
-        this.ship03 = new Spaceship(this, game.config.width, Phaser.Math.Between(50, 500), 'ice', 0, 10).setOrigin(0, 0);
+        this.ship01 = new Spaceship(this, game.config.width+142, 200, 'ice', 0, 30).setOrigin(0, 0);
+        this.ship02 = new Spaceship(this, game.config.width+300, 150, 'ice', 0, 20).setOrigin(0, 0);
+        this.ship03 = new Spaceship(this, game.config.width+240, 200, 'ice', 0, 30).setOrigin(0, 0);
+        this.ship04 = new Spaceship(this, game.config.width+80, 200, 'ice', 0, 30).setOrigin(0, 0);
+        this.ship05 = new Spaceship(this, game.config.width, 350, 'ice', 0, 10).setOrigin(0, 0);
 
-        //define our objects
-        this.ball = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
+        // define our objects
+        this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
         //set the gravity
-        this.ball.setGravityY(500);
-        //place the ground
-        //let groundX = this.sys.game.config.width / 2;
-        //let groundY = this.sys.game.config.height * .95;
+        this.seal.setGravityY(500);
+        // place the ground
         this.ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height*1.3, 'ground');
-        //size the ground
+        // size the ground
         this.ground.displayWidth = this.sys.game.config.width * 1.1;
-        //make the ground stay in place
+        // make the ground stay in place
         this.ground.setImmovable();
-        //add the colliders
-        this.physics.add.collider(this.ball, this.ground);
-        
-        this.input.on('pointerdown', this.jump, this);
+        // add the colliders
+        this.physics.add.collider(this.seal, this.ground);
+        // jump when pointerdown
+        this.input.on(Phaser.Input.Keyboard.JustDown(keyLEFT), this.jump, this);
     }
 
     jump() {
-        this.ball.setVelocityY(-200);
+        this.seal.setVelocityY(-200);
     }
 
     
 
     update() {
-        this.background.tilePositionX += 2;
+        this.background.tilePositionX += 1.5;
         
         // 冰块代替物
-        this.ship01.update(Phaser.Math.Between(400, 100));           // update spaceships (x3)
-        this.ship02.update(Phaser.Math.Between(400, 100));
-        this.ship03.update(Phaser.Math.Between(400, 100));
+        this.ship01.update();           // update spaceships
+        this.ship02.update();
+        this.ship03.update();
+        this.ship04.update();
+        this.ship05.update();
         if(this.ship03 < 0) {
-            this.ship03.reset(Phaser.Math.Between(0, 500));
+            this.ship03.reset(a);
         }else if(this.ship02 < 0) {
-            this.ship02.reset(Phaser.Math.Between(0, 500));
+            this.ship02.reset(a);
         }else if(this.ship01 < 0) {
-            this.ship01.reset(Phaser.Math.Between(0, 500));
-        } 
+            this.ship01.reset(a);
+        } else if(this.ship04 < 0) {
+            this.ship04.reset(a);
+        } else if(this.ship05 < 0) {
+            this.ship05.reset(a);
+        }
     }
 
 }
