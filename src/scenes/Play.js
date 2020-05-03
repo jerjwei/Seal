@@ -37,9 +37,11 @@ class Play extends Phaser.Scene {
         // background speed
         this.speed = 1;
         // add ice 
-        this.iceSpeed = -100;
+        this.iceSpeed = -60;
         this.iceCount = 1;
-        this.ice01 = this.physics.add.sprite(game.config.width+10, 360, 'ice');
+        this.ice01 = this.physics.add.sprite(game.config.width+10, 359, 'ice');
+        this.ice02 = this.physics.add.sprite(game.config.width+200, 359, 'ice');
+        //this.ice03 = this.physics.add.sprite(game.config.width+60, 359, 'ice');
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
@@ -51,10 +53,15 @@ class Play extends Phaser.Scene {
         this.ground.displayWidth = this.sys.game.config.width * 1.1;
         // make the ground stay in place
         this.ground.setImmovable();
+        
         // add the colliders
-        this.physics.add.collider(this.seal, this.ground);
         this.physics.add.collider(this.ice01, this.ground);
+        this.physics.add.collider(this.ice02, this.ground);
+        this.physics.add.collider(this.seal, this.ground);
+        //this.physics.add.collider(this.ice03, this.ground);
         this.physics.add.collider(this.seal, this.ice01);
+        this.physics.add.collider(this.seal, this.ice02);
+        
 
         // jump when pointerdown
         // this.input.on('pointerdown', this.jump, this);
@@ -118,6 +125,7 @@ class Play extends Phaser.Scene {
 
         // ice status
         this.ice01.setVelocityX(this.iceSpeed);
+        this.ice02.setVelocityX(this.iceSpeed);
         this.iceCount += 1;
         //this.ice();
 
@@ -146,6 +154,11 @@ class Play extends Phaser.Scene {
             this.iceSpeed *= 1.01;
         }
         this.background.tilePositionX += this.speed;
+
+        // wrap physics object(s) .wrap(gameObject, padding)
+        this.physics.world.wrap(this.ice01, Phaser.Math.Between(10, 200));
+        this.physics.world.wrap(this.ice02, Phaser.Math.Between(200, 360));
+        //this.physics.world.wrap(this.ice03, 50);
     }  
 
     //ice(){
