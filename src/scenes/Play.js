@@ -17,6 +17,12 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // count 
+        this.count = 1;
+
+        // ice speed
+        this.speed = 1;
+
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
@@ -32,11 +38,10 @@ class Play extends Phaser.Scene {
 
 
         // add spaceship (x3)
-        this.ship01 = new Spaceship(this, game.config.width+142, 200, 'ice', 0, 30).setOrigin(0, 0);
-        this.ship02 = new Spaceship(this, game.config.width+300, 150, 'ice', 0, 20).setOrigin(0, 0);
-        this.ship03 = new Spaceship(this, game.config.width+240, 200, 'ice', 0, 30).setOrigin(0, 0);
-        this.ship04 = new Spaceship(this, game.config.width+80, 200, 'ice', 0, 30).setOrigin(0, 0);
-        this.ship05 = new Spaceship(this, game.config.width, 350, 'ice', 0, 10).setOrigin(0, 0);
+        this.ice01 = new Ice(this, game.config.width, 330, 'ice', 0, 30).setOrigin(0, 0);
+        this.ice02 = new Ice(this, game.config.width+160, 150, 'ice', 0, 20).setOrigin(0, 0);
+        this.ice03 = new Ice(this, game.config.width+320, 290, 'ice', 0, 30).setOrigin(0, 0);
+        this.ice04 = new Ice(this, game.config.width+480, 130, 'ice', 0, 30).setOrigin(0, 0);        
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
@@ -51,35 +56,66 @@ class Play extends Phaser.Scene {
         // add the colliders
         this.physics.add.collider(this.seal, this.ground);
         // jump when pointerdown
-        this.input.on(Phaser.Input.Keyboard.JustDown(keyLEFT), this.jump, this);
+        // this.input.on('pointerdown', this.jump, this);
+
+        // jump method
+        this.jumpTime = 0;
+
+        // score
+        this.playerScore = 0;
+
+        // score display
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 200
+        }
+        this.scoreLeft = this.add.text(69, 54, this.p1Score, scoreConfig);
     }
 
     jump() {
         this.seal.setVelocityY(-200);
+        this.jumpTime += 1;
     }
 
     
 
     update() {
-        this.background.tilePositionX += 1.5;
+        // jump methods
+        if( this.jumpTime<1 && Phaser.Input.Keyboard.JustDown(keyUP) ){
+            this.jump();
+        }
+        if( this.seal.body.touching.down ){
+            this.jumpTime = 0;
+        }
+
+        // speed up method
+        this.count += 1;
+        if( this.count%17==1 ) {
+            this.speed *= 1.01;
+        }
+        this.background.tilePositionX += this.speed;
         
         // 冰块代替物
-        this.ship01.update();           // update spaceships
-        this.ship02.update();
-        this.ship03.update();
-        this.ship04.update();
-        this.ship05.update();
-        if(this.ship03 < 0) {
-            this.ship03.reset(a);
-        }else if(this.ship02 < 0) {
-            this.ship02.reset(a);
-        }else if(this.ship01 < 0) {
-            this.ship01.reset(a);
-        } else if(this.ship04 < 0) {
-            this.ship04.reset(a);
-        } else if(this.ship05 < 0) {
-            this.ship05.reset(a);
+        this.ice01.update(this.speed);           // update ice
+        this.ice02.update(this.speed);
+        this.ice03.update(this.speed);
+        this.ice04.update(this.speed);
+        if(this.ice03 < 0) {
+            this.ice03.reset();
+        }else if(this.ice02 < 0) {
+            this.ice02.reset();
+        }else if(this.ice01 < 0) {
+            this.ice01.reset();
+        } else if(this.ice04 < 0) {
+            this.ice04.reset();
         }
     }
-
 }
