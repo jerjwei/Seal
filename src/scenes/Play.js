@@ -39,17 +39,12 @@ class Play extends Phaser.Scene {
         // add ice 
         this.iceSpeed = -100;
         this.iceCount = 1;
-        this.ice01 = this.physics.add.sprite(game.config.width+10, 360, 'ice')
-        
-        //this.ice01 = new Ice(this, game.config.width, 330, 'ice', 0, 30).setOrigin(0, 0);
-        //this.ice02 = new Ice(this, game.config.width+160, 150, 'ice', 0, 20).setOrigin(0, 0);
-        //this.ice03 = new Ice(this, game.config.width+320, 290, 'ice', 0, 30).setOrigin(0, 0);
-        //this.ice04 = new Ice(this, game.config.width+480, 130, 'ice', 0, 30).setOrigin(0, 0);        
+        this.ice01 = this.physics.add.sprite(game.config.width+10, 360, 'ice');
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
         //set the gravity
-        this.seal.setGravityY(600);
+        this.seal.setGravityY(1000);
         // place the ground
         this.ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height*1.3, 'ground');
         // size the ground
@@ -65,7 +60,21 @@ class Play extends Phaser.Scene {
         // this.input.on('pointerdown', this.jump, this);
 
         // jump method
-        this.jumpTime = 2;
+        this.jumpTime = 1;
+
+        // walk animation
+        this.anims.create({
+            key: 'walking',
+            frames: 'seal',
+            frameRate: 2,
+            repeat: -1
+        });
+        // jump animation
+        this.anims.create({
+            key: 'jumping',
+            frames: this.anims.generateFrameNumbers('jump', { start: 0, end: 11, first: 0}),
+            //frameRate: 12,
+        });
 
         // score
         this.playerScore = 0;
@@ -87,8 +96,13 @@ class Play extends Phaser.Scene {
     }
 
     jump() {
-        this.seal.setVelocityY(-250);
-        this.jumpTime += 1;
+        this.seal.setVelocityY(-450);
+        this.seal.anims.play('jumping');
+        this.jumpTime++;
+    }
+
+    walk(){
+        this.seal.anims.play('walking', true);
     }
 
     
@@ -120,6 +134,9 @@ class Play extends Phaser.Scene {
         }
         if( this.seal.body.touching.down ){
             this.jumpTime = 0;
+            this.walk();
+        }else if(this.jumpTime < 1){
+            this.seal.anims.play('jumping',true);
         }
 
         // speed up method
