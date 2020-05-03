@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
         // this.input.on('pointerdown', this.jump, this);
 
         // jump method
-        this.jumpTime = 0;
+        this.jumpTime = 2;
 
         // score
         this.playerScore = 0;
