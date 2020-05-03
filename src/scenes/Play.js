@@ -39,9 +39,8 @@ class Play extends Phaser.Scene {
         // add ice 
         this.iceSpeed = -60;
         this.iceCount = 1;
-        this.ice01 = this.physics.add.sprite(game.config.width+10, 359, 'ice');
-        this.ice02 = this.physics.add.sprite(game.config.width+200, 359, 'ice');
-        //this.ice03 = this.physics.add.sprite(game.config.width+60, 359, 'ice');
+        this.ice01 = this.physics.add.sprite(game.config.width+10, 357, 'ice');
+        this.ice02 = this.physics.add.sprite(game.config.width+200, 357, 'ice');
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
@@ -58,7 +57,6 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.ice01, this.ground);
         this.physics.add.collider(this.ice02, this.ground);
         this.physics.add.collider(this.seal, this.ground);
-        //this.physics.add.collider(this.ice03, this.ground);
         this.physics.add.collider(this.seal, this.ice01);
         this.physics.add.collider(this.seal, this.ice02);
         
@@ -103,7 +101,7 @@ class Play extends Phaser.Scene {
     }
 
     jump() {
-        this.seal.setVelocityY(-450);
+        this.seal.setVelocityY(-400);
         this.seal.anims.play('jumping');
         this.jumpTime++;
     }
