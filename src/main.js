@@ -24,5 +24,4 @@ game.settings = {
 }
 
 // reserve keyboard vars
-let keyUP, keyLEFT, keyRIGHT;
-// ss
+let keyUP, keyLEFT;

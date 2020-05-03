@@ -20,33 +20,36 @@ class Play extends Phaser.Scene {
         // count 
         this.count = 1;
 
-        // ice speed
-        this.speed = 1;
-
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
         // define keyboard keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     
         // background music
         // this.bgm = this.sound.add('background', {config});
         // this.bgm.play();
     
         // game over flag
-        // this.gameOver = false;
-
-
-        // add spaceship (x3)
-        this.ice01 = new Ice(this, game.config.width, 330, 'ice', 0, 30).setOrigin(0, 0);
-        this.ice02 = new Ice(this, game.config.width+160, 150, 'ice', 0, 20).setOrigin(0, 0);
-        this.ice03 = new Ice(this, game.config.width+320, 290, 'ice', 0, 30).setOrigin(0, 0);
-        this.ice04 = new Ice(this, game.config.width+480, 130, 'ice', 0, 30).setOrigin(0, 0);        
+        this.gameOver = false;
+   
+        // background speed
+        this.speed = 1;
+        // add ice 
+        this.iceSpeed = -100;
+        this.iceCount = 1;
+        this.ice01 = this.physics.add.sprite(game.config.width+10, 360, 'ice')
+        
+        //this.ice01 = new Ice(this, game.config.width, 330, 'ice', 0, 30).setOrigin(0, 0);
+        //this.ice02 = new Ice(this, game.config.width+160, 150, 'ice', 0, 20).setOrigin(0, 0);
+        //this.ice03 = new Ice(this, game.config.width+320, 290, 'ice', 0, 30).setOrigin(0, 0);
+        //this.ice04 = new Ice(this, game.config.width+480, 130, 'ice', 0, 30).setOrigin(0, 0);        
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
         //set the gravity
-        this.seal.setGravityY(500);
+        this.seal.setGravityY(600);
         // place the ground
         this.ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height*1.3, 'ground');
         // size the ground
@@ -55,6 +58,9 @@ class Play extends Phaser.Scene {
         this.ground.setImmovable();
         // add the colliders
         this.physics.add.collider(this.seal, this.ground);
+        this.physics.add.collider(this.ice01, this.ground);
+        this.physics.add.collider(this.seal, this.ice01);
+
         // jump when pointerdown
         // this.input.on('pointerdown', this.jump, this);
 
@@ -81,13 +87,33 @@ class Play extends Phaser.Scene {
     }
 
     jump() {
-        this.seal.setVelocityY(-200);
+        this.seal.setVelocityY(-250);
         this.jumpTime += 1;
     }
 
     
 
     update() {
+        // check key input for restart
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.scene.restart();
+        }
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start("menuScene");
+        }
+
+        // ice status
+        this.ice01.setVelocityX(this.iceSpeed);
+        this.iceCount += 1;
+        //this.ice();
+
+        if( this.seal.body.touching.right ){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', this.p1Score).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (↑) to Restart or ← for Menu', this.p1Score).setOrigin(0.5);
+            // this.bgm.stop();
+        }
+
         // jump methods
         if( this.jumpTime<1 && Phaser.Input.Keyboard.JustDown(keyUP) ){
             this.jump();
@@ -100,22 +126,13 @@ class Play extends Phaser.Scene {
         this.count += 1;
         if( this.count%17==1 ) {
             this.speed *= 1.01;
+            this.iceSpeed *= 1.01;
         }
         this.background.tilePositionX += this.speed;
-        
-        // 冰块代替物
-        this.ice01.update(this.speed);           // update ice
-        this.ice02.update(this.speed);
-        this.ice03.update(this.speed);
-        this.ice04.update(this.speed);
-        if(this.ice03 < 0) {
-            this.ice03.reset();
-        }else if(this.ice02 < 0) {
-            this.ice02.reset();
-        }else if(this.ice01 < 0) {
-            this.ice01.reset();
-        } else if(this.ice04 < 0) {
-            this.ice04.reset();
-        }
-    }
+    }  
+
+    //ice(){
+    //    if( this.iceCount%100==1 ){
+    //    }
+    //}
 }
