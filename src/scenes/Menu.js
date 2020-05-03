@@ -31,7 +31,7 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
         this.add.text(centerX, centerY-textSpacer, 'Endless Runner', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use Left-Click to jump', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'Use ↑ to jump & avoid the ice!', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
         this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for to start', menuConfig).setOrigin(0.5);
