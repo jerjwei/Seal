@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
         this.bgm = this.sound.add('menuscenebackground', {config});
         this.bgm.play();
         this.bgm.loop = true;
+        this.bgm.volume = 0.4;
         // menu display
         let menuConfig = {
             fontFamily: 'Bradley Hand',
@@ -44,6 +45,7 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        this.sound.volume = 0.4;
         this.sound.play('start');
         this.scene.start("playScene");    
         this.bgm.stop();
