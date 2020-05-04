@@ -33,7 +33,9 @@ class Play extends Phaser.Scene {
     
         // game over flag
         this.gameOver = false;
-   
+
+        // define our objects
+
         // background speed
         this.speed = 1;
         // add ice 
@@ -41,9 +43,7 @@ class Play extends Phaser.Scene {
         this.iceCount = 1;
         this.ice01 = this.physics.add.sprite(game.config.width+10, 359, 'ice');
         this.ice02 = this.physics.add.sprite(game.config.width+200, 359, 'ice');
-        //this.ice03 = this.physics.add.sprite(game.config.width+60, 359, 'ice');
-
-        // define our objects
+        // add seal
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
         //set the gravity
         this.seal.setGravityY(1000);
@@ -61,14 +61,11 @@ class Play extends Phaser.Scene {
         //this.physics.add.collider(this.ice03, this.ground);
         this.physics.add.collider(this.seal, this.ice01);
         this.physics.add.collider(this.seal, this.ice02);
-        
-
-        // jump when pointerdown
-        // this.input.on('pointerdown', this.jump, this);
 
         // jump method
         this.jumpTime = 1;
 
+        // animations
         // walk animation
         this.anims.create({
             key: 'walking',
@@ -83,27 +80,23 @@ class Play extends Phaser.Scene {
             //frameRate: 12,
         });
 
-        // score
-        this.playerScore = 0;
-
         // score display
         let scoreConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
+            fontFamily: 'Comic Sans MS',
+            fontSize: '30px',
+            color: '#17306A',
+            align: 'middle',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 200
+            fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(69, 54, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(69, 45, this.p1Score, scoreConfig);
     }
 
     jump() {
-        this.seal.setVelocityY(-450);
+        this.seal.setVelocityY(-400);
         this.seal.anims.play('jumping');
         this.jumpTime++;
     }
@@ -123,16 +116,32 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
+        // score
+        if ( !this.gameOver){
+            this.playerScore = Phaser.Math.CeilTo(this.speed*10-10.5);
+        }
+
         // ice status
         this.ice01.setVelocityX(this.iceSpeed);
         this.ice02.setVelocityX(this.iceSpeed);
         this.iceCount += 1;
-        //this.ice();
+
+        let overConfig = {
+            fontFamily: 'Bradley Hand',
+            fontSize: '18px',
+            color: '#3E5CA3',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 500
+        }
 
         if( this.seal.body.touching.right ){
             this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', this.p1Score).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (↑) to Restart or ← for Menu', this.p1Score).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 - 32, 'GAME OVER', overConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press (↑) to Restart or ← for Menu', overConfig).setOrigin(0.5);
             // this.bgm.stop();
         }
 
@@ -158,11 +167,8 @@ class Play extends Phaser.Scene {
         // wrap physics object(s) .wrap(gameObject, padding)
         this.physics.world.wrap(this.ice01, Phaser.Math.Between(10, 200));
         this.physics.world.wrap(this.ice02, Phaser.Math.Between(200, 360));
-        //this.physics.world.wrap(this.ice03, 50);
-    }  
 
-    //ice(){
-    //    if( this.iceCount%100==1 ){
-    //    }
-    //}
+        // display score
+        this.scoreLeft.text = this.playerScore + 'M';
+    }
 }
