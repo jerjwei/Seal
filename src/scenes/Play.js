@@ -45,7 +45,7 @@ class Play extends Phaser.Scene {
         this.ice02 = this.physics.add.sprite(game.config.width+200, 357, 'ice');
 
         // define our objects
-        this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, 0, 'seal');
+        this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, this.sys.game.config.height*0.75, 'seal');
         //set the gravity
         this.seal.setGravityY(1000);
         // place the ground
@@ -81,6 +81,7 @@ class Play extends Phaser.Scene {
         });
 
         // score display
+        this.playerScore = 0;
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
             fontSize: '30px',
@@ -92,7 +93,8 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(69, 45, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(69, 45, this.playerScore, scoreConfig);
+        this.arrowUp = this.add.text(this.sys.game.config.width / 4, 290, '↑', scoreConfig);
     }
 
     jump() {
@@ -108,7 +110,6 @@ class Play extends Phaser.Scene {
     
 
     update() {
-
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.scene.restart();
@@ -148,6 +149,7 @@ class Play extends Phaser.Scene {
 
         // jump methods
         if( this.jumpTime<1 && Phaser.Input.Keyboard.JustDown(keyUP) ){
+            this.arrowUp.destroy();
             this.jump();
             this.sound.play('jse');
         }
