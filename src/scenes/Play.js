@@ -9,6 +9,9 @@ class Play extends Phaser.Scene {
         this.load.image('ground', './assets/ground.png');
         this.load.image('background', './assets/background.png');
         this.load.image('ice', './assets/ice.png');
+        this.load.image('snow_1', './assets/snow_1.png');
+        this.load.image('snow_2', './assets/snow_2.png');
+        this.load.image('snow_3', './assets/snow_3.png');
         this.load.spritesheet('jump', './assets/jump.png', {frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 12});
         this.load.spritesheet('seal', './assets/normal.png', {frameWidth: 64, frameHeight: 48, startFrame: 1, endFrame: 2});
 
@@ -23,6 +26,7 @@ class Play extends Phaser.Scene {
 
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+        this.snow_1 = this.add.tileSprite(0, 0, 640, 480, 'snow_2').setOrigin(0, 0);
 
         // define keyboard keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -42,6 +46,9 @@ class Play extends Phaser.Scene {
         this.iceCount = 1;
         this.ice01 = this.physics.add.sprite(game.config.width+10, 357, 'ice');
         this.ice02 = this.physics.add.sprite(game.config.width+200, 357, 'ice');
+
+        this.snow_2 = this.add.tileSprite(0, 0, 640, 480, 'snow_2').setOrigin(0, 0);
+        this.snow_3 = this.add.tileSprite(0, 0, 640, 480, 'snow_3').setOrigin(0, 0);
 
         // define our objects
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, 0, 'seal');
@@ -163,7 +170,15 @@ class Play extends Phaser.Scene {
             this.speed *= 1.01;
             this.iceSpeed *= 1.01;
         }
+
+        // background movements
         this.background.tilePositionX += this.speed;
+        this.snow_1.tilePositionY += -5;
+        this.snow_2.tilePositionY += -2.5;
+        this.snow_3.tilePositionY += -1;
+        this.snow_1.tilePositionX += 1;
+        this.snow_2.tilePositionX += 1;
+        this.snow_3.tilePositionX += 1;
 
         // wrap physics object(s) .wrap(gameObject, padding)
         this.physics.world.wrap(this.ice01, Phaser.Math.Between(10, 200));
