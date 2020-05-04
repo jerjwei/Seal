@@ -6,6 +6,14 @@
 //                   create animations, and find proper collision detection.
 //                2. In our design, we have great visual style, harmonious background music, 
 //                   and various sound effects.
+// Citation：
+//          Play scene 
+//          Radiant Mythology.  “Yasuda Takuya - Funny Companion”  Tales of the World.  Nov 7th, 2014  https://downloads.khinsider.com/game-soundtracks/album/tales-of-the-world-radiant-mythology/Yasuda%2520Takuya%2520-%2520Funny%2520Companion.mp3 
+//          jump effect 
+//          http://www.orangefreesounds.com/boing-sound-effect/  Alexander 
+//          Menu scene 
+//          Bossa Nova drum with bass and synth rhythm.Free music loops in wav format.Sound from Korg PSS 50 analog groovebox,1980s drum machine.http://www.orangefreesounds.com/bossa-nova-drum-with-bass-and-synth-rhythm/ Alexander
+
 
 // game configuration object
 let config = {
