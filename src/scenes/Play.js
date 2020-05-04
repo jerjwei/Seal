@@ -91,7 +91,7 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 150
         }
         this.scoreLeft = this.add.text(69, 45, this.playerScore, scoreConfig);
         this.arrowUp = this.add.text(this.sys.game.config.width / 4, 290, '↑', scoreConfig);
@@ -173,6 +173,6 @@ class Play extends Phaser.Scene {
         this.physics.world.wrap(this.ice02, Phaser.Math.Between(200, 360));
 
         // display score
-        this.scoreLeft.text = this.playerScore + 'M';
+        this.scoreLeft.text = this.playerScore + 'Meters';
     }
 }
