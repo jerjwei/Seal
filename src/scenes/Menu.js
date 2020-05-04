@@ -5,12 +5,13 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        this.load.audio('sfx_select', './assets/blip_select12.wav');
-        this.load.audio('sfx_explosion', './assets/explosion38.wav');
-        this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
+        this.load.audio('menuscenebackground', './assets/background2.wav');
+        this.load.audio('start', './assets/jiao.wav');
     }
 
     create() {
+        this.bgm = this.sound.add('menuscenebackground', {config});
+        this.bgm.play();
         // menu display
         let menuConfig = {
             fontFamily: 'Bradley Hand',
@@ -34,9 +35,6 @@ class Menu extends Phaser.Scene {
         menuConfig.backgroundColor = '#FFFFFF';
         menuConfig.color = '#000';
         this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for to start', menuConfig).setOrigin(0.5);
-        
-        // launch the next scene
-        // this.scene.start('playScene');
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -44,8 +42,9 @@ class Menu extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-        this.sound.play('sfx_select');
+        this.sound.play('start');
         this.scene.start("playScene");    
+        this.bgm.stop();
         }
     }   
 }

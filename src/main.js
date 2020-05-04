@@ -2,7 +2,7 @@
 // Group member: Jia Wei, Rui Chen, Sunny Yan, Zihao Liu
 // Slidding Seal
 // 2020/05/03
-// creative tilt justification
+// Our design is creative because in our game world the seal can do single or double-jump up to players' choice. 
 let config = {
     type: Phaser.CANVAS,
     width: 640,

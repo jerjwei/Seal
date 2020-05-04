@@ -13,7 +13,8 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('seal', './assets/normal.png', {frameWidth: 64, frameHeight: 48, startFrame: 1, endFrame: 2});
 
         // preload.music
-        this.load.audio('background', './assets/background.wav');
+        this.load.audio('playscenebackground', './assets/background1.wav');
+        this.load.audio('jse', './assets/jumpsoundeffect.mp3');
     }
 
     create() {
@@ -28,13 +29,11 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
     
         // background music
-        // this.bgm = this.sound.add('background', {config});
-        // this.bgm.play();
+        this.bgm = this.sound.add('playscenebackground', {config});
+        this.bgm.play();
     
         // game over flag
         this.gameOver = false;
-
-        // define our objects
 
         // background speed
         this.speed = 1;
@@ -108,6 +107,7 @@ class Play extends Phaser.Scene {
     
 
     update() {
+
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.scene.restart();
@@ -128,7 +128,7 @@ class Play extends Phaser.Scene {
 
         let overConfig = {
             fontFamily: 'Bradley Hand',
-            fontSize: '18px',
+            fontSize: '25px',
             color: '#3E5CA3',
             align: 'right',
             padding: {
@@ -142,12 +142,13 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
             this.add.text(game.config.width/2, game.config.height/2 - 32, 'GAME OVER', overConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press (↑) to Restart or ← for Menu', overConfig).setOrigin(0.5);
-            // this.bgm.stop();
+            this.bgm.stop();
         }
 
         // jump methods
         if( this.jumpTime<1 && Phaser.Input.Keyboard.JustDown(keyUP) ){
             this.jump();
+            this.sound.play('jse');
         }
         if( this.seal.body.touching.down ){
             this.jumpTime = 0;
