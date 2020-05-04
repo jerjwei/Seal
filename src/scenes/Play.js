@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
         this.load.image('snow_2', './assets/snow_2.png');
         this.load.image('snow_3', './assets/snow_3.png');
         this.load.spritesheet('jump', './assets/jump.png', {frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 12});
-        this.load.spritesheet('seal', './assets/normal.png', {frameWidth: 64, frameHeight: 48, startFrame: 1, endFrame: 2});
+        this.load.spritesheet('seal', './assets/slide.png', {frameWidth: 80, frameHeight: 47, startFrame: 0, endFrame: 9});
 
         // preload.music
         this.load.audio('playscenebackground', './assets/background1.wav');
@@ -35,6 +35,7 @@ class Play extends Phaser.Scene {
         // background music
         this.bgm = this.sound.add('playscenebackground', {config});
         this.bgm.play();
+        this.bgm.loop = true;
     
         // game over flag
         this.gameOver = false;
@@ -51,7 +52,7 @@ class Play extends Phaser.Scene {
         this.snow_3 = this.add.tileSprite(0, 0, 640, 480, 'snow_3').setOrigin(0, 0);
 
         // define our objects
-        this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, 0, 'seal');
+        this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, this.sys.game.config.height*0.75, 'seal');
         //set the gravity
         this.seal.setGravityY(1000);
         // place the ground
@@ -76,7 +77,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'walking',
             frames: 'seal',
-            frameRate: 2,
+            frameRate: 10,
             repeat: -1
         });
         // jump animation
@@ -87,6 +88,7 @@ class Play extends Phaser.Scene {
         });
 
         // score display
+        this.playerScore = 0;
         let scoreConfig = {
             fontFamily: 'Comic Sans MS',
             fontSize: '30px',
@@ -96,14 +98,15 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 150
         }
-        this.scoreLeft = this.add.text(69, 45, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(69, 45, this.playerScore, scoreConfig);
+        this.arrowUp = this.add.text(this.sys.game.config.width / 4, 290, '↑', scoreConfig);
     }
 
     jump() {
         this.seal.setVelocityY(-400);
-        this.seal.anims.play('jumping');
+        //this.seal.anims.play('jumping');
         this.jumpTime++;
     }
 
@@ -114,7 +117,6 @@ class Play extends Phaser.Scene {
     
 
     update() {
-
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
             this.scene.restart();
@@ -148,12 +150,13 @@ class Play extends Phaser.Scene {
         if( this.seal.body.touching.right ){
             this.gameOver = true;
             this.add.text(game.config.width/2, game.config.height/2 - 32, 'GAME OVER', overConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press (↑) to Restart or ← for Menu', overConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press [↑] to Restart or [←] for Menu', overConfig).setOrigin(0.5);
             this.bgm.stop();
         }
 
         // jump methods
         if( this.jumpTime<1 && Phaser.Input.Keyboard.JustDown(keyUP) ){
+            this.arrowUp.destroy();
             this.jump();
             this.sound.play('jse');
         }
@@ -161,7 +164,7 @@ class Play extends Phaser.Scene {
             this.jumpTime = 0;
             this.walk();
         }else if(this.jumpTime < 1){
-            this.seal.anims.play('jumping',true);
+            //this.seal.anims.play('jumping',true);
         }
 
         // speed up method
@@ -185,6 +188,6 @@ class Play extends Phaser.Scene {
         this.physics.world.wrap(this.ice02, Phaser.Math.Between(200, 360));
 
         // display score
-        this.scoreLeft.text = this.playerScore + 'M';
+        this.scoreLeft.text = this.playerScore + 'Meters';
     }
 }

@@ -12,6 +12,7 @@ class Menu extends Phaser.Scene {
     create() {
         this.bgm = this.sound.add('menuscenebackground', {config});
         this.bgm.play();
+        this.bgm.loop = true;
         // menu display
         let menuConfig = {
             fontFamily: 'Bradley Hand',
@@ -30,11 +31,12 @@ class Menu extends Phaser.Scene {
         let centerY = game.config.height/2;
         let textSpacer = 64;
 
-        this.add.text(centerX, centerY-textSpacer, 'Slidding Seal', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use ↑ to jump & avoid the ice!', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY-textSpacer, 'Sliding Seal', menuConfig).setOrigin(0.5);
+        menuConfig.fontSize = '30px';
+        this.add.text(centerX, centerY, 'Use [↑] to jump & avoid the ice cubes!', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#FFFFFF';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for to start', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY+textSpacer, 'Press [←] for to start', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
