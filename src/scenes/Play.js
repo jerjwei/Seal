@@ -142,7 +142,7 @@ class Play extends Phaser.Scene {
         if( this.seal.body.touching.right ){
             this.gameOver = true;
             this.add.text(game.config.width/2, game.config.height/2 - 32, 'GAME OVER', overConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press (↑) to Restart or ← for Menu', overConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 32, 'Press [↑] to Restart or [←] for Menu', overConfig).setOrigin(0.5);
             this.bgm.stop();
         }
 

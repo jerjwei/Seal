@@ -1,8 +1,13 @@
+// Date:          2020/05/03
+// Group member:  Jia Wei, Rui Chen, Sunny Yan, Zihao Liu
+// Game Name:     Slidding Seal
+// Creating Tilt: 1. We looked beyond the class examples and learned how 
+//                   to create infinite random ice cubes using phaser.math, 
+//                   create animations, and find proper collision detection.
+//                2. In our design, we have great visual style, harmonious background music, 
+//                   and various sound effects.
+
 // game configuration object
-// Group member: Jia Wei, Rui Chen, Sunny Yan, Zihao Liu
-// Slidding Seal
-// 2020/05/03
-// Our design is creative because in our game world the seal can do single or double-jump up to players' choice. 
 let config = {
     type: Phaser.CANVAS,
     width: 640,

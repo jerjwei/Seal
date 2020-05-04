@@ -32,10 +32,10 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
         this.add.text(centerX, centerY-textSpacer, 'Slidding Seal', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use ↑ to jump & avoid the ice!', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'Use [↑] to jump & avoid the ice!', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#FFFFFF';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY+textSpacer, 'Press (left arrow) for to start', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY+textSpacer, 'Press [←] for to start', menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
