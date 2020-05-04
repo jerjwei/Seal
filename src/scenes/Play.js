@@ -10,7 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('background', './assets/background.png');
         this.load.image('ice', './assets/ice.png');
         this.load.spritesheet('jump', './assets/jump.png', {frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 12});
-        this.load.spritesheet('seal', './assets/normal.png', {frameWidth: 64, frameHeight: 48, startFrame: 1, endFrame: 2});
+        this.load.spritesheet('seal', './assets/slide.png', {frameWidth: 80, frameHeight: 47, startFrame: 0, endFrame: 9});
 
         // preload.music
         this.load.audio('playscenebackground', './assets/background1.wav');
@@ -31,6 +31,7 @@ class Play extends Phaser.Scene {
         // background music
         this.bgm = this.sound.add('playscenebackground', {config});
         this.bgm.play();
+        this.bgm.loop = true;
     
         // game over flag
         this.gameOver = false;
@@ -69,7 +70,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'walking',
             frames: 'seal',
-            frameRate: 2,
+            frameRate: 10,
             repeat: -1
         });
         // jump animation
@@ -96,7 +97,7 @@ class Play extends Phaser.Scene {
 
     jump() {
         this.seal.setVelocityY(-400);
-        this.seal.anims.play('jumping');
+        //this.seal.anims.play('jumping');
         this.jumpTime++;
     }
 
@@ -154,7 +155,7 @@ class Play extends Phaser.Scene {
             this.jumpTime = 0;
             this.walk();
         }else if(this.jumpTime < 1){
-            this.seal.anims.play('jumping',true);
+            //this.seal.anims.play('jumping',true);
         }
 
         // speed up method

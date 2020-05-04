@@ -12,6 +12,7 @@ class Menu extends Phaser.Scene {
     create() {
         this.bgm = this.sound.add('menuscenebackground', {config});
         this.bgm.play();
+        this.bgm.loop = true;
         // menu display
         let menuConfig = {
             fontFamily: 'Bradley Hand',
