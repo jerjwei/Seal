@@ -9,14 +9,14 @@ class Play extends Phaser.Scene {
         this.load.image('ground', './assets/ground.png');
         this.load.image('background', './assets/background.png');
         this.load.image('ice', './assets/ice.png');
+        this.load.spritesheet('jump', './assets/jump1.png', {frameWidth: 80, frameHeight: 47, startFrame: 0, endFrame: 0});
         this.load.image('snow_1', './assets/snow_1.png');
         this.load.image('snow_2', './assets/snow_2.png');
         this.load.image('snow_3', './assets/snow_3.png');
-        this.load.spritesheet('jump', './assets/jump.png', {frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 12});
         this.load.spritesheet('seal', './assets/slide.png', {frameWidth: 80, frameHeight: 47, startFrame: 0, endFrame: 9});
 
         // preload.music
-        this.load.audio('playscenebackground', './assets/background1.wav');
+        this.load.audio('playscenebackground', './assets/07 Funny Companion().mp3');
         this.load.audio('jse', './assets/jumpsoundeffect.mp3');
     }
 
@@ -37,6 +37,7 @@ class Play extends Phaser.Scene {
         this.bgm = this.sound.add('playscenebackground', {config});
         this.bgm.play();
         this.bgm.loop = true;
+        this.bgm.volume = 0.4;
     
         // game over flag
         this.gameOver = false;
@@ -82,8 +83,9 @@ class Play extends Phaser.Scene {
         // jump animation
         this.anims.create({
             key: 'jumping',
-            frames: this.anims.generateFrameNumbers('jump', { start: 0, end: 11, first: 0}),
-            //frameRate: 12,
+            frames: this.anims.generateFrameNumbers('jump', { start: 0, end: 0, first: 0}),
+            frameRate:30,
+            repeat: -1
         });
 
         // score display
@@ -105,7 +107,7 @@ class Play extends Phaser.Scene {
 
     jump() {
         this.seal.setVelocityY(-400);
-        //this.seal.anims.play('jumping');
+        this.seal.anims.play('jumping');
         this.jumpTime++;
     }
 
@@ -158,12 +160,13 @@ class Play extends Phaser.Scene {
             this.arrowUp.destroy();
             this.jump();
             this.sound.play('jse');
+            this.sound.volume = 0.4;
         }
         if( this.seal.body.touching.down ){
             this.jumpTime = 0;
             this.walk();
         }else if(this.jumpTime < 1){
-            //this.seal.anims.play('jumping',true);
+            this.seal.anims.play('jumping',true);
         }
 
         // speed up method
