@@ -1,4 +1,8 @@
 // game configuration object
+// Group member: Jia Wei, Rui Chen, Sunny Yan, Zihao Liu
+// Slidding Seal
+// 2020/05/03
+// creative tilt justification
 let config = {
     type: Phaser.CANVAS,
     width: 640,
