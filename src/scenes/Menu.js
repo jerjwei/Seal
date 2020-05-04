@@ -14,8 +14,8 @@ class Menu extends Phaser.Scene {
         // menu display
         let menuConfig = {
             fontFamily: 'Bradley Hand',
-            fontSize: '28px',
-            color: '#3E5CA3',
+            fontSize: '40px',
+            color: '#90C1F6',
             align: 'right',
             padding: {
                 top: 5,
