@@ -26,7 +26,8 @@ class Play extends Phaser.Scene {
 
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
-        this.snow_1 = this.add.tileSprite(0, 0, 640, 480, 'snow_2').setOrigin(0, 0);
+        this.snow_2 = this.add.tileSprite(0, 0, 640, 480, 'snow_2').setOrigin(0, 0);
+        this.snow_3 = this.add.tileSprite(0, 0, 640, 480, 'snow_3').setOrigin(0, 0);
 
         // define keyboard keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
@@ -48,15 +49,13 @@ class Play extends Phaser.Scene {
         this.ice01 = this.physics.add.sprite(game.config.width+10, 357, 'ice');
         this.ice02 = this.physics.add.sprite(game.config.width+200, 357, 'ice');
 
-        this.snow_2 = this.add.tileSprite(0, 0, 640, 480, 'snow_2').setOrigin(0, 0);
-        this.snow_3 = this.add.tileSprite(0, 0, 640, 480, 'snow_3').setOrigin(0, 0);
-
         // define our objects
-        this.seal = this.physics.add.sprite(this.sys.game.config.width / 4, this.sys.game.config.height*0.75, 'seal');
+        this.seal = this.physics.add.sprite(this.sys.game.config.width/4, this.sys.game.config.height*0.75, 'seal');
+        this.snow_1 = this.add.tileSprite(0, 0, 640, 480, 'snow_1').setOrigin(0, 0);
         //set the gravity
         this.seal.setGravityY(1000);
         // place the ground
-        this.ground = this.physics.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height*1.3, 'ground');
+        this.ground = this.physics.add.sprite(this.sys.game.config.width/2, this.sys.game.config.height*1.3, 'ground');
         // size the ground
         this.ground.displayWidth = this.sys.game.config.width * 1.1;
         // make the ground stay in place
