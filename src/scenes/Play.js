@@ -41,9 +41,16 @@ class Play extends Phaser.Scene {
         // add ice 
         this.iceSpeed = -60;
         this.iceCount = 1;
+<<<<<<< HEAD
         this.ice01 = this.physics.add.sprite(game.config.width+10, 359, 'ice');
         this.ice02 = this.physics.add.sprite(game.config.width+200, 359, 'ice');
         // add seal
+=======
+        this.ice01 = this.physics.add.sprite(game.config.width+10, 357, 'ice');
+        this.ice02 = this.physics.add.sprite(game.config.width+200, 357, 'ice');
+
+        // define our objects
+>>>>>>> 976998832384013a4b912247e402622c2e1e35c0
         this.seal = this.physics.add.sprite(this.sys.game.config.width / 2, 0, 'seal');
         //set the gravity
         this.seal.setGravityY(1000);
@@ -58,7 +65,6 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.ice01, this.ground);
         this.physics.add.collider(this.ice02, this.ground);
         this.physics.add.collider(this.seal, this.ground);
-        //this.physics.add.collider(this.ice03, this.ground);
         this.physics.add.collider(this.seal, this.ice01);
         this.physics.add.collider(this.seal, this.ice02);
 
